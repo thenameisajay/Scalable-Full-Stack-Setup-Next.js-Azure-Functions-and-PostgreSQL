@@ -1,10 +1,11 @@
 import {
+  app,
   HttpRequest,
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
 
-export async function HttpExample(
+export async function Hello(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -12,5 +13,8 @@ export async function HttpExample(
 
   const name = request.query.get("name") || (await request.text()) || "world";
 
-  return { body: `Hello, ${name}!` };
+  return {
+    status: 200,
+    jsonBody: { message: `Hello, ${name}!` },
+  };
 }

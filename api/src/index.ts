@@ -1,12 +1,12 @@
 import { app } from "@azure/functions";
-import { HttpExample } from "./functions/HttpExample";
+import { Hello } from "./functions/Hello";
 
 app.setup({
   enableHttpStream: true,
 });
 
-app.http("HttpExample", {
+app.http("Hello", {
   methods: ["GET", "POST"],
-  authLevel: "anonymous", // This means no authentication is required
-  handler: HttpExample,
+  authLevel: "anonymous",
+  handler: Hello,
 });
