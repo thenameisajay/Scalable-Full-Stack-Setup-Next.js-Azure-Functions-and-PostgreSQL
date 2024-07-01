@@ -30,11 +30,13 @@ export default function Page() {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
+  const [sucessMessage, setSucessMessage] = useState<string>("");
 
   const viewData = async () => {
     try {
+      setSucessMessage("");
       setLoading(true);
-      const response = await axios.get("/api/getpeople");
+      const response = await axios.get("/api/people");
       console.log("Response in the frontend: ", response);
       setPeople(response.data.data.data.people as Person[]);
       setLoading(false);
@@ -44,10 +46,35 @@ export default function Page() {
     }
   };
 
+  const addData = async () => {
+    try {
+      setSucessMessage("");
+      setLoading(true);
+      const response = await axios.get("/api/add_people");
+      console.log("Response in the frontend: ", response);
 
+      setSucessMessage("Data added successfully");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setError("Error while adding data");
+    }
+  };
 
-
-  
+  const dropData = async () => {
+    try {
+      setSucessMessage("");
+      setLoading(true);
+      const response = await axios.get("/api/drop_people");
+      console.log("Response in the frontend: ", response);
+      setPeople([]);
+      setSucessMessage("Data deleted successfully");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setError("Error while deleting data");
+    }
+  };
 
   console.log("Data is", people);
 
@@ -62,6 +89,7 @@ export default function Page() {
             <Button
               type="button"
               className="bg-blue-500 text-white hover:bg-blue-600"
+              onClick={addData}
             >
               Populate Data
             </Button>
@@ -75,6 +103,7 @@ export default function Page() {
             <Button
               type="button"
               className="bg-red-500 text-white hover:bg-red-600"
+              onClick={dropData}
             >
               Delete Data
             </Button>
@@ -138,7 +167,17 @@ export default function Page() {
         </section>
       )}
       {loading && <p className="text-center text-gray-500 mt-4">Loading...</p>}
-      {error && <p className="text-center text-red-500 mt-4">{error}</p>}
+      {!loading && error && sucessMessage === "" && (
+        <p className="text-center text-red-500 mt-4 font-bold text-2xl">
+          {error}
+        </p>
+      )}
+      {sucessMessage && (
+        <p className="text-center text-green-500 mt-4 font-bold text-2xl">
+          {sucessMessage}
+        </p>
+      )}
+
       <section id="back to home page">
         <div className="flex flex-col w-full max-w-4xl mx-auto text-center my-4">
           <Link href="/">

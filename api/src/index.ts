@@ -31,6 +31,6 @@ app.http("AddPeople", {
 app.http("DeletePeople", {
   methods: ["GET"], // Ideally DELETE method should be used here  but these are just examples
   authLevel: "anonymous",
-  route: "delete_people",
+  route: "drop_people",
   handler: DeletePeople,
 });
