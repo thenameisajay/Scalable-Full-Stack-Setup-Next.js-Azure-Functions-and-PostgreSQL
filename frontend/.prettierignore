@@ -1,0 +1,13 @@
+# Ignore html artifacts:
+*.html
+
+# Ignore artifacts:
+build
+coverage
+
+# Ignore the output of the Tailwind CLI
+tailwind.config.ts
+
+# Ignore node_modules
+node_modules
+.next/

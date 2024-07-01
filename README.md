@@ -19,6 +19,7 @@ This example demonstrates deploying a Next.js app to Azure Functions. The archit
 ## Environment Variables
 
 Three configuration files are required:
+
 - `.env` in the project root for Docker
 - `.env` in the `frontend` folder
 - `local.settings.json` in the `api` folder for Azure Functions
@@ -28,7 +29,7 @@ Examples of these files are provided in the repository.
 ## Steps to Run the Project
 
 1. **Clone the repository:**
-   
+
    ```bash
    git clone <repository_url>
    cd <repository_folder>
@@ -87,6 +88,12 @@ Examples of these files are provided in the repository.
 - Click the "Populate Data" button to insert sample data of 5 people into the database.
 - Click the "Delete Data" button to remove the data.
 - Click the "View Data" button to view the data.
+
+## Note
+
+- The codebase in this repository is designed primarily for demonstrating a scalable architecture and maintainability rather than adhering to strict code quality standards. This approach was chosen due to the focus on architectural design for an in-house product.
+- In some instances, GET methods have been used where POST or DELETE methods might be more appropriate. This decision was made to expedite development and prioritize the architectural aspects.
+- Feedback and suggestions for improvements are welcome. If you identify areas where the code or architecture can be enhanced, please feel free to reach out.
 
 ## Conclusion
 

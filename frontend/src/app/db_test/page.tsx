@@ -1,8 +1,9 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import Link from "next/link";
-import { useState } from "react";
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -11,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 interface Person {
   id: number;
@@ -29,63 +30,64 @@ interface Person {
 export default function Page() {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>("");
-  const [sucessMessage, setSucessMessage] = useState<string>("");
+  const [error, setError] = useState<string>('');
+  const [sucessMessage, setSucessMessage] = useState<string>('');
 
   const viewData = async () => {
     try {
-      setSucessMessage("");
+      setSucessMessage('');
       setLoading(true);
-      const response = await axios.get("/api/people");
-      console.log("Response in the frontend: ", response);
+      const response = await axios.get('/api/people');
+      console.log('Response in the frontend: ', response);
       setPeople(response.data.data.data.people as Person[]);
+      setError('');
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setError("Error while fetching data");
+      setError('Error while fetching data');
     }
   };
 
   const addData = async () => {
     try {
-      setSucessMessage("");
+      setSucessMessage('');
       setLoading(true);
-      const response = await axios.get("/api/add_people");
-      console.log("Response in the frontend: ", response);
+      const response = await axios.get('/api/add_people');
+      console.log('Response in the frontend: ', response);
 
-      setSucessMessage("Data added successfully");
+      setSucessMessage('Data added successfully');
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setError("Error while adding data");
+      setError('Error while adding data');
     }
   };
 
   const dropData = async () => {
     try {
-      setSucessMessage("");
+      setSucessMessage('');
       setLoading(true);
-      const response = await axios.get("/api/drop_people");
-      console.log("Response in the frontend: ", response);
+      const response = await axios.get('/api/drop_people');
+      console.log('Response in the frontend: ', response);
       setPeople([]);
-      setSucessMessage("Data deleted successfully");
+      setSucessMessage('Data deleted successfully');
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setError("Error while deleting data");
+      setError('Error while deleting data');
     }
   };
 
-  console.log("Data is", people);
+  console.log('Data is', people);
 
   return (
-    <main className="flex min-h-screen flex-col w-full justify-center items-center bg-gray-100 p-6">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-100 p-6">
       <section id="hello-banner" className="mb-6">
-        <div className="flex flex-col w-full max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        <div className="mx-auto flex w-full max-w-4xl flex-col text-center">
+          <h1 className="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">
             Testing the DB Connection
           </h1>
-          <div className="flex flex-col lg:flex-row w-full gap-4 justify-center items-center">
+          <div className="flex w-full flex-col items-center justify-center gap-4 lg:flex-row">
             <Button
               type="button"
               className="bg-blue-500 text-white hover:bg-blue-600"
@@ -113,7 +115,7 @@ export default function Page() {
       {people && people.length > 0 && (
         <section
           id="data"
-          className="w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-x-auto"
+          className="mx-auto w-full max-w-4xl overflow-x-auto rounded-lg bg-white shadow-md"
         >
           <Table>
             <TableCaption>
@@ -166,20 +168,20 @@ export default function Page() {
           </Table>
         </section>
       )}
-      {loading && <p className="text-center text-gray-500 mt-4">Loading...</p>}
-      {!loading && error && sucessMessage === "" && (
-        <p className="text-center text-red-500 mt-4 font-bold text-2xl">
+      {loading && <p className="mt-4 text-center text-gray-500">Loading...</p>}
+      {!loading && error && sucessMessage === '' && (
+        <p className="mt-4 text-center text-2xl font-bold text-red-500">
           {error}
         </p>
       )}
       {sucessMessage && (
-        <p className="text-center text-green-500 mt-4 font-bold text-2xl">
+        <p className="mt-4 text-center text-2xl font-bold text-green-500">
           {sucessMessage}
         </p>
       )}
 
       <section id="back to home page">
-        <div className="flex flex-col w-full max-w-4xl mx-auto text-center my-4">
+        <div className="mx-auto my-4 flex w-full max-w-4xl flex-col text-center">
           <Link href="/">
             <Button type="button" variant="outline">
               Go Back
