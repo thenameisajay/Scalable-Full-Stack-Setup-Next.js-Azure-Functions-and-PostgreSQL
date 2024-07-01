@@ -1,8 +1,9 @@
 import { app } from "@azure/functions";
 import { Hello } from "./functions/Hello";
 import { GetPeople } from "./functions/GetPeople";
-
-app.setup({
+import { AddPeople } from "./functions/AddPeople";
+import { DeletePeople } from "./functions/DeletePeople";
+-app.setup({
   enableHttpStream: true,
 });
 
@@ -17,5 +18,19 @@ app.http("GetPeople", {
   methods: ["GET"],
   authLevel: "anonymous",
   route: "people",
-  handler: GetPeople
+  handler: GetPeople,
+});
+
+app.http("AddPeople", {
+  methods: ["GET"], // Ideally POST method should be used here but these are just examples
+  authLevel: "anonymous",
+  route: "add_people",
+  handler: AddPeople,
+});
+
+app.http("DeletePeople", {
+  methods: ["GET"], // Ideally DELETE method should be used here  but these are just examples
+  authLevel: "anonymous",
+  route: "delete_people",
+  handler: DeletePeople,
 });

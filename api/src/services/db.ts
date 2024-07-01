@@ -3,7 +3,7 @@ import { Client } from "pg";
 
 
 
-const { DB_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } = process.env;
+const { DB_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } = process.env; // local.settings.json
 
 async function createClient() {
   const client = new Client({
