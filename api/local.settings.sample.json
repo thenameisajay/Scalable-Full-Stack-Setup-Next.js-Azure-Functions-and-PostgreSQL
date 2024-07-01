@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "POSTGRES_USER": "",  
+    "POSTGRES_PASSWORD": "",
+    "POSTGRES_DB": "",
+    "DB_HOST": ""
+  },
+  "Host": {
+    "CORS": "*"
+  }
+}
