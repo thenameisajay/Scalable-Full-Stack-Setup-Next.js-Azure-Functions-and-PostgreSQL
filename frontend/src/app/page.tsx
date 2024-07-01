@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -55,14 +56,14 @@ export default function Home() {
       <section id="hello-banner">
         <div className="">
           <h1 className="xl:text-8xl text-4xl font-bold text-center text-gray-900">
-            {loading ? "Loading..." : welcomeMessage}
+            {loading ? "Loading..." : welcomeMessage.toUpperCase()}
             {error !== "" && <p className="text-red-500 text-sm">{error}</p>}
           </h1>
         </div>
       </section>
       <form onSubmit={handleSubmit} method="post">
         <section id="input-field">
-          <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-x-4 my-3 lg:my-10 lg:w-96 w-full">
+          <div className="flex flex-col lg:flex-row items-center  justify-center space-y-4 lg:space-y-0 lg:space-x-4 my-3 lg:my-10 lg:w-96 w-full">
             <Input
               name="name"
               placeholder="Enter your name"
@@ -71,6 +72,18 @@ export default function Home() {
               required
             />
             <Button type="submit">Submit</Button>
+          </div>
+        </section>
+        <section id="database-testing">
+          <div className="mt-5 flex w-full items-center justify-center">
+            <Link href="/db_test">
+              <Button
+                type="button"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Test Database
+              </Button>
+            </Link>
           </div>
         </section>
       </form>
