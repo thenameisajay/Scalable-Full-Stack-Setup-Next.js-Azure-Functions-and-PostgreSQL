@@ -54,11 +54,10 @@ Examples of these files are provided in the repository.
    npm install
    ```
 
-   For the initial setup, deploy the functions to Azure by running:
+For the initial setup, deploy the functions to Azure by following these steps:
 
-   ```bash
-   func start
-   ```
+ Press `Fn + F5` to deploy the functions.
+
 
    Follow the prompts to configure and debug the functions locally.
 
