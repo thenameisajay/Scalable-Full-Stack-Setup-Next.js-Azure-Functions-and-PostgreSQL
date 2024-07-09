@@ -43,9 +43,19 @@ Examples of these files are provided in the repository.
    docker-compose up
    ```
 
+ For Linux :
+   Change the permissions of the folder called pg_data_master (docker volume) to 777
+   ```bash
+   sudo chmod 777 pg_data_master
+   ```
+   and the user and group of the folder to 1001
+   ```bash
+   sudo chown -R 1001:1001 pg_data_master
+   ```
+
    Customize the database credentials in the `docker-compose.yml` file via `.env` or directly.
 
-3. **Set up Azure Functions:**
+2. **Set up Azure Functions:**
 
    Navigate to the `api` folder and install dependencies:
 
