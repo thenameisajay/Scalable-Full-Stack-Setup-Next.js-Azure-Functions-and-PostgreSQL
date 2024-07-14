@@ -33,13 +33,22 @@ export default function Page() {
   const [error, setError] = useState<string>('');
   const [sucessMessage, setSucessMessage] = useState<string>('');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const viewData = async () => {
     try {
       setSucessMessage('');
       setLoading(true);
-      const response = await axios.get('/api/people');
+      const response = await axios.get(`${API_URL}/api/people`);
       console.log('Response in the frontend: ', response);
-      setPeople(response.data.data.data.people as Person[]);
+      setPeople(response.data.data.people as Person[]);
+      if (response.data.status === 500) {
+        setLoading(false);
+        setSucessMessage('');
+        console.log('Status is 500', response.data.error.message);
+        setError(response.data.error.message as string);
+        return;
+      }
       setError('');
       setLoading(false);
     } catch (err) {
@@ -52,8 +61,15 @@ export default function Page() {
     try {
       setSucessMessage('');
       setLoading(true);
-      const response = await axios.get('/api/add_people');
+      const response = await axios.get(`${API_URL}/api/add_people`);
       console.log('Response in the frontend: ', response);
+      if (response.data.status === 500) {
+        setLoading(false);
+        setSucessMessage('');
+        console.log('Status is 500', response.data.error.message);
+        setError(response.data.error.message as string);
+        return;
+      }
 
       setSucessMessage('Data added successfully');
       setLoading(false);
@@ -67,14 +83,47 @@ export default function Page() {
     try {
       setSucessMessage('');
       setLoading(true);
-      const response = await axios.get('/api/drop_people');
+      const response = await axios.delete(`${API_URL}/api/drop_people`);
+      console.log('Response in the drop func: ', response);
+      // Weird bug over here
+      if (response.status === 500) {
+        setLoading(false);
+        setSucessMessage('');
+        console.log('Status is 500', response.data.error.message);
+        setError(response.data.error.message as string);
+        return;
+      }
       console.log('Response in the frontend: ', response);
       setPeople([]);
       setSucessMessage('Data deleted successfully');
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setError('Error while deleting data');
+      setPeople([]);
+      setError('Data is empty');
+    }
+  };
+
+  const addTestUser = async () => {
+    try {
+      setSucessMessage('');
+      setLoading(true);
+      const response = await axios.get(`${API_URL}/api/add_test_user`);
+      console.log('Response in the frontend: ', response);
+      if (response.data.status === 500) {
+        setLoading(false);
+        setSucessMessage('');
+        console.log('Status is 500', response.data.error.message);
+        setError(response.data.error.message as string);
+        return;
+      }
+
+      setSucessMessage('Data added successfully');
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+
+      setError(err as string);
     }
   };
 
@@ -108,6 +157,13 @@ export default function Page() {
               onClick={dropData}
             >
               Delete Data
+            </Button>
+            <Button
+              type="button"
+              className="bg-teal-500 text-white hover:bg-teal-600"
+              onClick={addTestUser}
+            >
+              Add Test User
             </Button>
           </div>
         </div>
@@ -169,7 +225,7 @@ export default function Page() {
         </section>
       )}
       {loading && <p className="mt-4 text-center text-gray-500">Loading...</p>}
-      {!loading && error && sucessMessage === '' && (
+      {!loading && error !== '' && sucessMessage === '' && (
         <p className="mt-4 text-center text-2xl font-bold text-red-500">
           {error}
         </p>

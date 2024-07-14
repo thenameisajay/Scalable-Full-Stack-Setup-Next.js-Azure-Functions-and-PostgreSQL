@@ -5,37 +5,36 @@ import {
   InvocationContext,
 } from "@azure/functions";
 
-import { deletePeople } from "../services/people.services";
+import { addTestUser } from "../services/people.services";
 
-export async function DeletePeople(
+export async function AddTestUser(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
   context.log(`Http function processed request for url "${request.url}"`);
 
   try {
-    const response = await deletePeople();
+    const response = await addTestUser();
 
-    context.log("Response in the function: ", response);
     if (response) {
       return {
         status: 200,
         jsonBody: {
-          data: "Deleted Data Successfully",
+          data: "Added Test User Successfully",
         },
       };
     } else {
       return {
         status: 500,
         jsonBody: {
-          error: "Failed to delete Data",
+          error: "Failed to add Test User",
         },
       };
     }
   } catch (err) {
     return {
       status: 500,
-      jsonBody: { error: "Failed to fetch data" },
+      jsonBody: { error: "Failed to add Test User" },
     };
   }
 }

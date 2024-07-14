@@ -12,15 +12,17 @@ export default function Home() {
   const [welcomeMessage, setWelcomeMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
+
   useEffect(() => {
     const retrieveData = async () => {
       try {
         setLoading(true);
-        const API_URL = '/api/hello';
-        const data = await axios.get(API_URL);
+        const URL = `${API_URL}/api/hello`;
+        const data = await axios.get(URL);
         console.log('Response in the frontend: ', data);
 
-        setWelcomeMessage(data.data.data.message as string);
+        setWelcomeMessage(data.data.message as string);
         setLoading(false);
       } catch (err) {
         setWelcomeMessage('');
@@ -29,7 +31,7 @@ export default function Home() {
       }
     };
     void retrieveData();
-  }, []);
+  }, [API_URL]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,11 +40,12 @@ export default function Home() {
 
     try {
       setLoading(true);
-      const API_URL = '/api/hello';
-      const data = await axios.post(API_URL, { name });
+      const URL = `${API_URL}/api/hello`;
+      console.log('Post request', URL);
+      const data = await axios.get(`${URL}?name=${name}`);
       console.log('Response in the frontend: ', data);
-      setWelcomeMessage(data.data.data.message as string);
-
+      setError('');
+      setWelcomeMessage(data.data.message as string);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -59,7 +62,7 @@ export default function Home() {
           <h1 className="text-center text-4xl font-bold text-gray-900 xl:text-8xl">
             {loading ? 'Loading...' : welcomeMessage.toUpperCase()}
             {error !== '' && (
-              <h2 className="text-4xl text-red-500 lg:text-5xl">{error}</h2>
+              <p className="text-4xl text-red-500 lg:text-5xl">{error}</p>
             )}
           </h1>
         </div>

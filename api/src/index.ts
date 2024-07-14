@@ -3,7 +3,10 @@ import { Hello } from "./functions/Hello";
 import { GetPeople } from "./functions/GetPeople";
 import { AddPeople } from "./functions/AddPeople";
 import { DeletePeople } from "./functions/DeletePeople";
--app.setup({
+import { AddTestUser } from "./functions/AddTestUser";
+import { ValidateUser } from "./functions/ValidateUser";
+
+app.setup({
   enableHttpStream: true,
 });
 
@@ -29,8 +32,22 @@ app.http("AddPeople", {
 });
 
 app.http("DeletePeople", {
-  methods: ["GET"], // Ideally DELETE method should be used here  but these are just examples
+  methods: ["DELETE"],
   authLevel: "anonymous",
   route: "drop_people",
   handler: DeletePeople,
+});
+
+app.http("AddTestUser", {
+  methods: ["GET"], // Ideally POST method should be used here but these are just examples
+  authLevel: "anonymous",
+  route: "add_test_user",
+  handler: AddTestUser,
+});
+
+app.http("ValidateUser", {
+  methods: ["POST"],
+  authLevel: "anonymous",
+  route: "validate_user",
+  handler: ValidateUser,
 });
