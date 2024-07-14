@@ -15,6 +15,12 @@ export async function AddPeople(
 
   try {
     const response = await addPeople();
+    if (!response) {
+      return {
+        status: 404,
+        jsonBody: { error: "No data found" },
+      };
+    }
     return {
       status: 200,
       jsonBody: {
@@ -24,7 +30,7 @@ export async function AddPeople(
   } catch (err) {
     return {
       status: 500,
-      jsonBody: { error: err as unknown as string },
+      jsonBody: { error: "Failed to add data" },
     };
   }
 }

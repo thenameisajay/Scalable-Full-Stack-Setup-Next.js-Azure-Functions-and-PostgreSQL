@@ -15,16 +15,27 @@ export async function DeletePeople(
 
   try {
     const response = await deletePeople();
-    return {
-      status: 200,
-      jsonBody: {
-        data: "Deleted Data Successfully",
-      },
-    };
+
+    context.log("Response in the function: ", response);
+    if (response) {
+      return {
+        status: 200,
+        jsonBody: {
+          data: "Deleted Data Successfully",
+        },
+      };
+    } else {
+      return {
+        status: 500,
+        jsonBody: {
+          error: "Failed to delete Data",
+        },
+      };
+    }
   } catch (err) {
     return {
       status: 500,
-      jsonBody: { error: err as unknown as string },
+      jsonBody: { error: "Failed to fetch data" },
     };
   }
 }
